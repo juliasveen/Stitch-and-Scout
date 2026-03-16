@@ -14,7 +14,7 @@ from PIL import Image
 load_dotenv()
 
 
-icon = Image.open("icon.png")
+icon = Image.open("sewn_star.png")
 st.set_page_config(page_title="Stitch & Scout", page_icon=icon, layout="wide")
 style.apply_diy_theme()
 
