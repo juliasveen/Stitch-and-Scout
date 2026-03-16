@@ -5,11 +5,11 @@ def apply_diy_theme():
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Fira+Sans:wght@400;700&display=swap');
 
-    /* ── Remove default Streamlit top padding so banner touches the top ── */
+    /* ── Account for Streamlit toolbar height ── */
     #root > div:first-child { padding-top: 0 !important; }
-    .stApp > header { display: none !important; }
+    .stApp > header { background: transparent !important; }
     .block-container {
-        padding-top: 0 !important;
+        padding-top: 3.5rem !important;
         padding-bottom: 2rem !important;
     }
 
@@ -89,11 +89,38 @@ def apply_diy_theme():
     h2, h3 {
         font-family: 'Gaegu', cursive !important;
         color: #5d1a1a !important;
+        font-size: 26px !important;
     }
 
-    label, p, .stCaption {
+    label, p, .stCaption, .stMarkdown p,
+    [data-testid="stWidgetLabel"] p,
+    [data-testid="stWidgetLabel"] {
         font-family: 'Gaegu', cursive !important;
         color: #5d1a1a !important;
+        font-size: 18px !important;
+    }
+
+    /* Sidebar text */
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] .stMarkdown p,
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+    [data-testid="stSidebar"] span {
+        font-family: 'Gaegu', cursive !important;
+        color: #5d1a1a !important;
+        font-size: 17px !important;
+    }
+
+    /* Input text itself */
+    input, textarea {
+        font-size: 17px !important;
+        font-family: 'Gaegu', cursive !important;
+    }
+
+    /* Selectbox and slider option text */
+    [data-baseweb="select"] * {
+        font-family: 'Gaegu', cursive !important;
+        font-size: 17px !important;
     }
 
     /* ── Sidebar: torn paper edge ── */
