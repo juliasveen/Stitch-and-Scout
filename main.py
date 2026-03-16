@@ -9,13 +9,12 @@ from utils.predictor import predict_price
 from utils.ebay_comps import fetch_comp_listings
 from utils.tag_pdf import generate_tag_pdf
 import style
-from PIL import Image
+# from PIL import Image
 
 load_dotenv()
 
 
-icon = Image.open("sewn_star.png")
-st.set_page_config(page_title="Stitch & Scout", page_icon=icon, layout="wide")
+st.set_page_config(page_title="Stitch & Scout", page_icon="🏷️", layout="wide")
 style.apply_diy_theme()
 
 # --- SESSION STATE ---
