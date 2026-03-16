@@ -1,15 +1,16 @@
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import json
+import io
 from config import GOOGLE_API_KEY
 
 def analyze_multiple_images(image_list):
     """
-    Analyzes clothing images using Gemini Vision.
+    Analyzes clothing images using Gemini Vision (google-genai SDK).
     Returns a dict with detected brand, type, material, color, size_hint,
     condition_hint, and confidence ('high' | 'medium' | 'low').
     """
-    genai.configure(api_key=GOOGLE_API_KEY)
-    model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    client = genai.Client(api_key=GOOGLE_API_KEY)
 
     prompt = """You are an expert fashion authenticator and thrift store buyer with 15+ years of experience.
 Examine these clothing item photo(s) carefully — including any visible tags, logos, labels, stitching, hardware, or print — and extract every detail you can.
@@ -47,7 +48,20 @@ Critical rules:
     }
 
     try:
-        response = model.generate_content([prompt] + image_list)
+        # Convert PIL images to bytes parts for the new SDK
+        parts = [prompt]
+        for img in image_list:
+            buf = io.BytesIO()
+            img.save(buf, format="JPEG")
+            parts.append(types.Part.from_bytes(
+                data=buf.getvalue(),
+                mime_type="image/jpeg"
+            ))
+
+        response = client.models.generate_content(
+            model="gemini-2.0-flash-lite",
+            contents=parts
+        )
         raw = response.text.strip()
 
         # Strip markdown fences if model ignores instructions
@@ -58,18 +72,14 @@ Critical rules:
             raw = raw.strip()
 
         parsed = json.loads(raw)
-
-        # Merge with defaults so missing keys never crash the app
         result = {**defaults, **parsed}
 
-        # Normalize confidence to known values
         if result["confidence"] not in ("high", "medium", "low"):
             result["confidence"] = "medium"
 
         return result
 
     except json.JSONDecodeError:
-        # Try to salvage partial data from plain text response
         result = defaults.copy()
         result["notes"] = "Could not parse structured response. Please fill in details manually."
         result["confidence"] = "low"
