@@ -1,0 +1,9 @@
+streamlit
+google-genai
+pandas
+scikit-learn
+joblib
+pillow
+python-dotenv
+reportlab
+requests

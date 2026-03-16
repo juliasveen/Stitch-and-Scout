@@ -1,0 +1,30 @@
+# Secrets — never commit these
+.env
+.streamlit/secrets.toml
+
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+env/
+venv/
+.venv/
+
+# Model — commit price_model.pkl so the live demo works out of the box
+# If you want to exclude it, uncomment the line below:
+# price_model.pkl
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Test images (optional — remove this line if you want them in the repo)
+test images/saved_searches.csv
+.streamlit/secrets.toml
+secrets.toml
+saved_searches.csv
