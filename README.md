@@ -147,4 +147,4 @@ python sync_market.py   # pulls new eBay sold listings
 
 ## Author
 
-**Julia!** · [github.com/yourusername](https://github.com/yourusername) · [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile) [bitbucket]
+**Julia!** · [github.com/yourusername](https://github.com/yourusername) · [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
