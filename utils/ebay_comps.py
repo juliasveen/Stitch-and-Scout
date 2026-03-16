@@ -16,18 +16,25 @@ def get_oauth_token():
     }
     try:
         response = requests.post(url, headers=headers, data=data, timeout=8)
-        return response.json().get("access_token")
-    except Exception:
-        return None
+        body = response.json()
+        token = body.get("access_token")
+        if not token:
+            # Return error string so caller can surface it
+            error = body.get("error_description") or body.get("error") or str(body)
+            return None, f"eBay auth failed: {error}"
+        return token, None
+    except Exception as e:
+        return None, f"eBay auth exception: {str(e)}"
 
 def fetch_comp_listings(brand, item_type, condition, limit=5):
     """
-    Returns up to `limit` live eBay listings for a given item.
-    Each result: {title, price, url, condition, image_url}
+    Returns (results, error_message).
+    results = list of {title, price, url, condition}
+    error_message = None if successful, string if failed.
     """
-    token = get_oauth_token()
+    token, auth_error = get_oauth_token()
     if not token:
-        return []
+        return [], auth_error
 
     query = f"{brand} {item_type}".strip()
     url = (
@@ -42,7 +49,17 @@ def fetch_comp_listings(brand, item_type, condition, limit=5):
 
     try:
         response = requests.get(url, headers=headers, timeout=8)
-        items = response.json().get("itemSummaries", [])
+        body = response.json()
+
+        # Surface any API-level errors
+        if "errors" in body:
+            msg = body["errors"][0].get("longMessage") or body["errors"][0].get("message", str(body))
+            return [], f"eBay API error: {msg}"
+
+        items = body.get("itemSummaries", [])
+        if not items:
+            return [], "No listings found for this item on eBay."
+
         results = []
         for item in items:
             try:
@@ -51,10 +68,10 @@ def fetch_comp_listings(brand, item_type, condition, limit=5):
                     "price":     float(item["price"]["value"]),
                     "url":       item.get("itemWebUrl", "#"),
                     "condition": item.get("condition", "Used"),
-                    "image_url": item.get("image", {}).get("imageUrl", ""),
                 })
             except Exception:
                 continue
-        return results
-    except Exception:
-        return []
+        return results, None
+
+    except Exception as e:
+        return [], f"eBay fetch exception: {str(e)}"

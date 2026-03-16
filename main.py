@@ -281,7 +281,7 @@ if st.session_state.get('show_tag') and st.session_state.get('last_price'):
         # Comp listings
         st.markdown("#### 🔍 eBay comp listings")
         with st.spinner("Fetching live comps..."):
-            comps = fetch_comp_listings(brand, item_type, condition, limit=5)
+            comps, comp_error = fetch_comp_listings(brand, item_type, condition, limit=5)
 
         if comps:
             prices    = [c['price'] for c in comps]
@@ -328,4 +328,4 @@ if st.session_state.get('show_tag') and st.session_state.get('last_price'):
                     unsafe_allow_html=True
                 )
         else:
-            st.caption("Couldn't fetch comps right now — check your eBay API key.")
+            st.warning(f"⚠️ {comp_error}" if comp_error else "No comps found.")
