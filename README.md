@@ -3,7 +3,7 @@
 
 > Upload a photo of any clothing item. Stitch & Scout identifies the brand, detects condition, predicts a calibrated resale price, and validates it against live eBay listings — all in under 10 seconds.
 
-**[🚀 Live Demo →](https://your-app.streamlit.app)** &nbsp;|&nbsp; Built with Python · Streamlit · Gemini Vision · scikit-learn · eBay API
+**[🚀 Live Demo →](https://stitch-and-scout.streamlit.app/)** &nbsp;|&nbsp; Built with Python · Streamlit · Gemini Vision · scikit-learn · eBay API
 
 ---
 
