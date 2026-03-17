@@ -2,7 +2,7 @@
 
 **An AI pricing tool for thrift & resale sellers.**
 
-I built this because pricing secondhand items is genuinely annoying — you end up with 15 eBay tabs open trying to figure out if something is worth $12 or $40. Stitch & Scout does that research in one scan.
+Pricing secondhand items is incredibly tedious and Goodwill overcharging is no help! One item can mean 15 open eBay tabs just to land on a number. Stitch & Scout cuts that down to a single photo upload.
 
 Upload a photo, get a price. That's it.
 
@@ -31,7 +31,7 @@ Drop in 1–3 photos of a clothing item (ideally one of the full item, one of th
 
 | | |
 |---|---|
-| Frontend | Streamlit with a fully custom CSS theme (scrapbook aesthetic, handwritten fonts, washi-tape buttons) |
+| Frontend | Streamlit with a fully custom CSS theme (scrapbook aesthetic, fun fonts, washi-tape buttons) |
 | Vision | Gemini 2.5 Flash Lite — reads tags, logos, stitching, hardware |
 | Pricing model | scikit-learn Random Forest in a Pipeline, with a calibration chain that corrects for eBay listing inflation |
 | Market data | eBay Browse API + Finding API fallback for live comp listings |
@@ -51,7 +51,7 @@ final_price = model_prediction
             × condition multiplier (well-loved = 0.55, new with tags = 1.10)
 ```
 
-Then clamped with per-condition floors and ceilings so nothing comes out at $0 or $200 for a used Gap tee.
+Then clamped with per-condition floors and ceilings so nothing comes out at $0 or $200 for a used t-shirt.
 
 ---
 
@@ -112,4 +112,4 @@ Stitch-and-Scout/
 
 ---
 
-*Built by [Julia Sveen](https://github.com/juliasveen) · [LinkedIn](https://linkedin.com/in/yourprofile)*
+*Built by [Julia Sveen](https://github.com/juliasveen) · [LinkedIn](https://www.linkedin.com/in/julia-sveen/)*
